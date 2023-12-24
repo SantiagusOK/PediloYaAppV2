@@ -1,8 +1,15 @@
-import 'package:comida_test/page_menu.dart';
+import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:pedilo_ya/datos/provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Datos(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pedilo Ya',
       home: PaginaMenu(),
     );
   }
