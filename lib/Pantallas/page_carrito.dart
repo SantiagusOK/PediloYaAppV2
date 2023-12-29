@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
+import 'package:pedilo_ya/Pantallas/page_resultado.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,84 @@ class PaginaCarrito extends StatefulWidget {
 }
 
 class _PaginaCarritoState extends State<PaginaCarrito> {
+  void mostrarCartelDecision() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Center(
+          child: Text('Tipo de pago'),
+        ),
+        content: SizedBox(
+          height: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(30, 0, 0, 0),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    minimumSize: const Size(double.infinity, 80),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.credit_card,
+                    size: 50,
+                    color: Colors.black,
+                  ),
+                  label: const Text(
+                    'Transferencia',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 25),
+                  )),
+              const SizedBox(height: 10),
+              TextButton.icon(
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(30, 0, 0, 0),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    minimumSize: const Size(double.infinity, 80),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PaginaResultado()));
+                  },
+                  icon: const Icon(
+                    Icons.attach_money_rounded,
+                    size: 50,
+                    color: Colors.black,
+                  ),
+                  label: const Text(
+                    'Efectivo',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 25),
+                  )),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(fontSize: 30, color: Colors.black),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Datos>(
@@ -131,6 +210,7 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(0))),
                           onPressed: () {
+                            mostrarCartelDecision();
                             //datos.mostrarListaCarrito();
                           },
                           child: const Column(

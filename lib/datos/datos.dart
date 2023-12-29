@@ -5,4 +5,5 @@ class DatosApp {
   String imagenUser = '';
   String direccionUser = '';
   List<ComidaCarrito> listaCarrito = [];
+  List comprobante = [''];
 }
