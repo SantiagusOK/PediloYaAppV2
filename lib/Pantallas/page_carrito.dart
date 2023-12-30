@@ -234,27 +234,11 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                         decoration: const BoxDecoration(
                           color: Colors.red,
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            const SizedBox(height: 15),
-                            Container(
-                              height: 160,
-                              width: 160,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.white,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.network(
-                                  'https://totalnewsagency.com/wp-content/uploads/2023/11/MASSA-DRO-1.jpg',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const Column(
+                            SizedBox(height: 15),
+                            Column(
                               children: [
                                 Text(
                                   'TITO CALDERON',
@@ -339,108 +323,6 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
                         color: Color.fromARGB(158, 0, 0, 0)),
-                  ),
-                ),
-                drawer: Drawer(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      Container(
-                        height: 250,
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const SizedBox(height: 15),
-                            Container(
-                              height: 160,
-                              width: 160,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.white,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.network(
-                                  'https://totalnewsagency.com/wp-content/uploads/2023/11/MASSA-DRO-1.jpg',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const Column(
-                              children: [
-                                Text(
-                                  'TITO CALDERON',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text('@titocalderon230',
-                                    style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      ListTile(
-                        title: const Row(
-                          children: [
-                            Icon(Icons.home_outlined),
-                            SizedBox(width: 10),
-                            Text('Menu')
-                          ],
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const PaginaMenu()));
-                        },
-                      ),
-                      ListTile(
-                        title: const Row(
-                          children: [
-                            Icon(Icons.shopping_cart_outlined),
-                            SizedBox(width: 10),
-                            Text('Carrito')
-                          ],
-                        ),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        title: const Row(
-                          children: [
-                            Icon(Icons.favorite_outline_rounded),
-                            SizedBox(width: 10),
-                            Text('Favorito')
-                          ],
-                        ),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        title: const Row(
-                          children: [
-                            Icon(Icons.shopping_basket_outlined),
-                            SizedBox(width: 10),
-                            Text('Mis Compras')
-                          ],
-                        ),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        title: const Row(
-                          children: [
-                            Icon(Icons.exit_to_app),
-                            SizedBox(width: 10),
-                            Text('Salir')
-                          ],
-                        ),
-                        onTap: () {},
-                      ),
-                    ],
                   ),
                 ),
               );
