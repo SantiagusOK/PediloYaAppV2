@@ -30,6 +30,10 @@ class _PaginaWelcomeState extends State<PaginaWelcome> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                datos.usuario().fotoPerfil,
+                height: 150,
+              ),
               const SizedBox(height: 10),
               Text(
                 datos.usuario().nombreCompleto,
@@ -43,6 +47,10 @@ class _PaginaWelcomeState extends State<PaginaWelcome> {
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
+              Image.network(
+                'https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif?20140201131911',
+                height: 100,
+              )
             ],
           ),
         ),

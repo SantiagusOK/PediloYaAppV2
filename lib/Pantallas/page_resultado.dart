@@ -4,6 +4,7 @@ import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:pedilo_ya/datos/comida.dart';
 import 'package:pedilo_ya/datos/comprobante.dart';
 import 'package:pedilo_ya/datos/provider.dart';
+import 'package:pedilo_ya/datos/usuario.dart';
 import 'package:provider/provider.dart';
 
 class PaginaResultado extends StatefulWidget {
@@ -62,10 +63,10 @@ class _PaginaResultadoState extends State<PaginaResultado> {
     return Consumer<Datos>(
       builder: (context, datos, child) {
         Comprobante comprobante = Comprobante(
-            nombre: 'Tito Calderon',
-            direccion: '…P. Sherman, 42 Wallaby Way, Sydney…',
+            nombre: datos.usuario().nombreCompleto,
+            direccion: datos.usuario().direccion,
             tipoDePago: 'efectivo',
-            misCompras: datos.listaCarrito());
+            misCompras: List.from(datos.usuario().listaCarrito));
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.red,
@@ -85,35 +86,39 @@ class _PaginaResultadoState extends State<PaginaResultado> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          ///////////////////////////////////////////////////// IMAGEN DE LA COMIDA
                           ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image.asset(
-                              datos.listaCarrito()[index].imagen,
+                              comprobante.misCompras[index].imagen,
                               fit: BoxFit.cover,
                               height: 50,
                               width: 50,
                             ),
                           ),
+                          ///////////////////////////////////////////////////// NOMBRE DE LA COMIDA
                           SizedBox(
                             width: 120,
                             child: Text(
-                              datos.listaCarrito()[index].nombre,
+                              comprobante.misCompras[index].nombre,
                               style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   fontWeight: FontWeight.w900,
                                   fontSize: 17),
                             ),
                           ),
-                          Text('x${datos.listaCarrito()[index].cantidad}',
+                          ///////////////////////////////////////////////////// CANTIDAD DE LA COMIDA
+                          Text('x${comprobante.misCompras[index].cantidad}',
                               style: const TextStyle(fontSize: 17)),
-                          Text('\$${datos.listaCarrito()[index].precio}',
+                          ///////////////////////////////////////////////////// PRECIO DE LA COMIDA
+                          Text('\$${comprobante.misCompras[index].precio}',
                               style: const TextStyle(fontSize: 17)),
                         ],
                       );
                     },
                   ),
                 ),
-                //---------------------------------- COMPROBANTE PARA EL USUARIO
+                ///////////////////////////////////////////////////// CUADRO DE DATOS
                 Container(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                   height: 250,
@@ -128,6 +133,7 @@ class _PaginaResultadoState extends State<PaginaResultado> {
                     child: Column(
                       children: [
                         Row(
+                          ///////////////////////////////////////////////////// NOMBRE
                           children: [
                             const SizedBox(
                                 width: 130,
@@ -149,6 +155,7 @@ class _PaginaResultadoState extends State<PaginaResultado> {
                           ],
                         ),
                         const SizedBox(height: 10),
+                        ///////////////////////////////////////////////////// DIRECCION
                         Row(
                           children: [
                             const SizedBox(
@@ -171,6 +178,7 @@ class _PaginaResultadoState extends State<PaginaResultado> {
                           ],
                         ),
                         const SizedBox(height: 10),
+                        ///////////////////////////////////////////////////// TIPO DE PAGO
                         Row(
                           children: [
                             const SizedBox(
@@ -256,6 +264,7 @@ class _PaginaResultadoState extends State<PaginaResultado> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0))),
                     onPressed: () {
+                      datos.guardarComprobante(comprobante);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -3,13 +3,26 @@ import 'dart:convert';
 import 'package:pedilo_ya/Pantallas/page_adios.dart';
 import 'package:pedilo_ya/Pantallas/page_carrito.dart';
 import 'package:pedilo_ya/Pantallas/page_comida_edit.dart';
+import 'package:pedilo_ya/Pantallas/page_fav.dart';
 import 'package:pedilo_ya/datos/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';
 
-class PaginaMenu extends StatelessWidget {
+class PaginaMenu extends StatefulWidget {
   const PaginaMenu({super.key});
+
+  @override
+  State<PaginaMenu> createState() => _PaginaMenuState();
+}
+
+class _PaginaMenuState extends State<PaginaMenu> {
+  @override
+  void initState() {
+    Datos datos = Provider.of<Datos>(context, listen: false);
+    datos.cambiarPosicion(0);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +71,9 @@ class PaginaMenu extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PaginaEdit(index: index)));
+                              builder: (context) => PaginaEdit(
+                                    comida: menu.listMenu[index],
+                                  )));
                     },
                     child: Container(
                       padding: const EdgeInsets.only(top: 20),
@@ -103,11 +118,25 @@ class PaginaMenu extends StatelessWidget {
                                 ),
                                 // ------------------------------------------------------------------ICON DE FAVORITOS
                                 IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.favorite_border_rounded,
+                                  onPressed: () {
+                                    setState(() {
+                                      if (datos.comidaEnFavorito(index)) {
+                                        datos.borrarComidaAFavorito(
+                                            index, datos.posicion());
+                                      } else {
+                                        datos.guardarComidaAFavorito(
+                                            menu.listMenu[index]);
+                                      }
+                                    });
+                                  },
+                                  icon: Icon(
+                                    datos.comidaEnFavorito(index)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
                                     size: 35,
-                                    color: Colors.black,
+                                    color: datos.comidaEnFavorito(index)
+                                        ? Colors.red
+                                        : Colors.black,
                                   ),
                                 ),
                               ],
@@ -126,15 +155,14 @@ class PaginaMenu extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 Container(
-                  height: 100,
                   decoration: const BoxDecoration(
                     color: Colors.red,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const SizedBox(height: 15),
-                      /*Container(
+                      const SizedBox(height: 50),
+                      Container(
                         height: 160,
                         width: 160,
                         padding: const EdgeInsets.all(5),
@@ -144,12 +172,12 @@ class PaginaMenu extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.memory(
-                            base64Decode(datos.usuario().fotoPerfil),
+                          child: Image.asset(
+                            datos.usuario().fotoPerfil,
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),*/
+                      ),
                       Column(
                         children: [
                           Text(
@@ -162,6 +190,7 @@ class PaginaMenu extends StatelessWidget {
                               style: const TextStyle(color: Colors.white)),
                         ],
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -199,7 +228,12 @@ class PaginaMenu extends StatelessWidget {
                       Text('Favorito')
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PaginaFavorito()));
+                  },
                 ),
                 ListTile(
                   title: const Row(

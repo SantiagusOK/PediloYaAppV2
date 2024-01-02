@@ -69,7 +69,16 @@ flutter:
     - lib/images/hamburguesa.jpg
     - lib/images/mini_logo.png
     - lib/images/fondo_inicio.jpg
-
+    - lib/images/imagenes_perfil/img1.png
+    - lib/images/imagenes_perfil/img2.png
+    - lib/images/imagenes_perfil/img3.png
+    - lib/images/imagenes_perfil/img4.png
+    - lib/images/imagenes_perfil/img5.png
+    - lib/images/imagenes_perfil/img6.png
+    - lib/images/imagenes_perfil/img7.png
+    - lib/images/imagenes_perfil/img8.png
+    - lib/images/imagenes_perfil/img9.png
+    - lib/images/imagenes_perfil/default.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

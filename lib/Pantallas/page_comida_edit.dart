@@ -1,5 +1,7 @@
 import 'package:pedilo_ya/Pantallas/page_carrito.dart';
+import 'package:pedilo_ya/Pantallas/page_fav.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
+import 'package:pedilo_ya/datos/comida.dart';
 import 'package:pedilo_ya/datos/comida_carrito.dart';
 import 'package:pedilo_ya/datos/menu.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +9,9 @@ import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';
 
 class PaginaEdit extends StatefulWidget {
-  const PaginaEdit({super.key, required this.index});
-  final int index;
+  const PaginaEdit({super.key, required this.comida});
+
+  final Comida comida;
   @override
   State<PaginaEdit> createState() => _PaginaEditState();
 }
@@ -30,7 +33,7 @@ class _PaginaEditState extends State<PaginaEdit> {
   void sumarCantidad() {
     setState(() {
       cantidad++;
-      precioEdit = cantidad * menu.listMenu[widget.index].precio;
+      precioEdit = cantidad * widget.comida.precio;
     });
   }
 
@@ -41,7 +44,7 @@ class _PaginaEditState extends State<PaginaEdit> {
       if (cantidad < 1) {
         cantidad = 1;
       } else {
-        precioEdit = cantidad * menu.listMenu[widget.index].precio;
+        precioEdit = cantidad * widget.comida.precio;
       }
     });
   }
@@ -49,7 +52,7 @@ class _PaginaEditState extends State<PaginaEdit> {
   @override
   void initState() {
     Menu menu = Menu();
-    precioEdit = menu.listMenu[widget.index].precio;
+    precioEdit = widget.comida.precio;
     super.initState();
   }
 
@@ -67,7 +70,7 @@ class _PaginaEditState extends State<PaginaEdit> {
                 //----------------------------------------------IMAGEN DE LA COMIDA
                 ClipRRect(
                   child: Image.asset(
-                    menu.listMenu[widget.index].imagen,
+                    widget.comida.imagen,
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: 140,
@@ -75,7 +78,7 @@ class _PaginaEditState extends State<PaginaEdit> {
                 ),
                 //----------------------------------------------NOMBRE DE LA COMIDA
                 Text(
-                  menu.listMenu[widget.index].nombre,
+                  widget.comida.nombre,
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w900),
                 ),
@@ -222,16 +225,24 @@ class _PaginaEditState extends State<PaginaEdit> {
                     onPressed: () {
                       //aca crea un objeto de ComidaCarrito, para luego guardarlo en la listaCarrito de la App
                       ComidaCarrito newComida = ComidaCarrito(
-                          nombre: menu.listMenu[widget.index].nombre,
+                          nombre: widget.comida.nombre,
                           precio: precioEdit,
                           cantidad: cantidad,
-                          imagen: menu.listMenu[widget.index].imagen);
+                          imagen: widget.comida.imagen);
                       datos.guardarComidaACarrito(newComida);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PaginaMenu(),
-                          ));
+                      if (datos.posicion() == 0) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PaginaMenu(),
+                            ));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PaginaFavorito(),
+                            ));
+                      }
                     },
                     child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -253,10 +264,10 @@ class _PaginaEditState extends State<PaginaEdit> {
                     onPressed: () {
                       //aca crea un objeto de ComidaCarrito, para luego guardarlo en la listaCarrito de la App
                       ComidaCarrito newComida = ComidaCarrito(
-                          nombre: menu.listMenu[widget.index].nombre,
+                          nombre: widget.comida.nombre,
                           precio: precioEdit,
                           cantidad: cantidad,
-                          imagen: menu.listMenu[widget.index].imagen);
+                          imagen: widget.comida.imagen);
                       datos.guardarComidaACarrito(newComida);
                       Navigator.push(
                         context,

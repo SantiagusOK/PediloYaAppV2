@@ -34,6 +34,11 @@ class _PaginaAdiosState extends State<PaginaAdios> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(
+                  datos.usuario().fotoPerfil,
+                  height: 150,
+                ),
+                const SizedBox(height: 10),
                 Text(
                   datos.usuario().nombreCompleto,
                   style: const TextStyle(color: Colors.white, fontSize: 20),

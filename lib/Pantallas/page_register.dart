@@ -2,13 +2,15 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pedilo_ya/Pantallas/page.imagenes.dart';
+import 'package:pedilo_ya/Pantallas/page_img.dart';
+import 'package:pedilo_ya/Pantallas/page_inicio.dart';
 import 'package:pedilo_ya/datos/datos.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';
 
 class PaginaRegister extends StatefulWidget {
-  const PaginaRegister({super.key});
+  const PaginaRegister({super.key, required this.imagen});
+  final String imagen;
 
   @override
   State<PaginaRegister> createState() => _PaginaRegisterState();
@@ -29,6 +31,16 @@ class _PaginaRegisterState extends State<PaginaRegister> {
     return Consumer<Datos>(builder: (context, datos, child) {
       return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PaginaInicio(),
+                  ));
+            },
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          ),
           centerTitle: true,
           title: const Text(
             'Registrarse',
@@ -44,7 +56,7 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //--------------------------------------------BOTON DE LA CAMARA
-                  /*Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
@@ -55,12 +67,14 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                              ));
+                                  builder: (context) => const PaginaImg()));
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                          child: Image.asset(
+                            widget.imagen == ''
+                                ? 'lib/images/imagenes_perfil/default.png'
+                                : widget.imagen,
                             fit: BoxFit.cover,
                             height: 150,
                             width: 150,
@@ -72,7 +86,7 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                   ),
                   const SizedBox(height: 20),
                   //--------------------------------------------TEXTFIELD DE NOMBRE Y APELLIDO
-                  */
+
                   Row(
                     children: [
                       //-------------------------------------------- NOMBRE
@@ -167,7 +181,7 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                             controlUsername.text,
                             controlDireccion.text,
                             controlPass1.text,
-                            fotoBits!);
+                            widget.imagen);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Cuenta creada con exito'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pedilo_ya/Pantallas/page_adios.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:pedilo_ya/Pantallas/page_resultado.dart';
 import 'package:pedilo_ya/datos/provider.dart';
@@ -230,26 +231,43 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                     padding: EdgeInsets.zero,
                     children: [
                       Container(
-                        height: 250,
                         decoration: const BoxDecoration(
                           color: Colors.red,
                         ),
-                        child: const Column(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(height: 15),
+                            const SizedBox(height: 50),
+                            Container(
+                              height: 160,
+                              width: 160,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Colors.white,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.asset(
+                                  datos.usuario().fotoPerfil,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                             Column(
                               children: [
                                 Text(
-                                  'TITO CALDERON',
-                                  style: TextStyle(
+                                  datos.usuario().nombreCompleto,
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text('@titocalderon230',
-                                    style: TextStyle(color: Colors.white)),
+                                Text('@${datos.usuario().nombreDeUsuario}',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
                               ],
                             ),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),
@@ -261,12 +279,7 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                             Text('Menu')
                           ],
                         ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const PaginaMenu()));
-                        },
+                        onTap: () {},
                       ),
                       ListTile(
                         title: const Row(
@@ -306,7 +319,12 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                             Text('Salir')
                           ],
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PaginaAdios()));
+                        },
                       ),
                     ],
                   ),

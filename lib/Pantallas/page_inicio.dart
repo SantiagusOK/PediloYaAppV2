@@ -74,7 +74,8 @@ class PaginaInicio extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const PaginaRegister()));
+                                builder: (context) =>
+                                    const PaginaRegister(imagen: '')));
                       },
                       child: const Text(
                         'Registrarse',
