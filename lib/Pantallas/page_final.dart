@@ -13,60 +13,60 @@ class PaginaFinal extends StatefulWidget {
 
 class _PaginaFinalState extends State<PaginaFinal> {
   @override
-  void initState() {
-    Datos datos = Provider.of<Datos>(context, listen: false);
-    //datos.borrarCarrito();
-    //print(datos.usuario().comprasUsuario[0].misCompras[0].nombre);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 67, 153, 69),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Su pedido fue tomado :)',
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: const Size(200, 50)),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PaginaMenu()));
-              },
-              child: const Text(
-                'Volver',
-                style: TextStyle(color: Colors.black),
+    return Consumer<Datos>(builder: (context, datos, child) {
+      return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 67, 153, 69),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Su pedido fue tomado :)',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: const Size(200, 50)),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PaginaComprobante(),
-                    ));
-              },
-              child: const Text(
-                'Ver Comprobante',
-                style: TextStyle(color: Colors.black),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(minimumSize: const Size(200, 50)),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaginaMenu()));
+                },
+                child: const Text(
+                  'Volver',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(minimumSize: const Size(200, 50)),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaginaComprobante(
+                          comprobante: datos.usuario().comprasUsuario[
+                              datos.usuario().comprasUsuario.length - 1],
+                          lugar: 'final',
+                        ),
+                      ));
+                },
+                child: const Text(
+                  'Ver Comprobante',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

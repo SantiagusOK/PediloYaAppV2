@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:pedilo_ya/datos/comida.dart';
 import 'package:pedilo_ya/datos/comida_carrito.dart';
 import 'package:pedilo_ya/datos/comprobante.dart';
+import 'package:pedilo_ya/datos/tarjeta.dart';
 
 class Usuario {
   String nombreCompleto;
@@ -13,7 +12,7 @@ class Usuario {
   List<ComidaCarrito> listaCarrito;
   List<Comprobante> comprasUsuario;
   List<Comida> comidaFavorito;
-  //List<Tarjeta> tarjetas; ----- falta crear la clase tarjeta
+  List<Tarjeta> misTarjetas;
   Usuario({
     this.nombreCompleto = '',
     this.nombreDeUsuario = '',
@@ -23,6 +22,6 @@ class Usuario {
     required this.comprasUsuario,
     required this.comidaFavorito,
     required this.listaCarrito,
-    //this.tarjetas = const [],
+    required this.misTarjetas,
   });
 }

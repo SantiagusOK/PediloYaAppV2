@@ -7,6 +7,7 @@ import 'package:pedilo_ya/datos/comida_carrito.dart';
 import 'package:pedilo_ya/datos/comprobante.dart';
 import 'package:pedilo_ya/datos/datos.dart';
 import 'package:pedilo_ya/datos/menu.dart';
+import 'package:pedilo_ya/datos/tarjeta.dart';
 import 'package:pedilo_ya/datos/usuario.dart';
 
 class Datos extends ChangeNotifier {
@@ -41,7 +42,6 @@ class Datos extends ChangeNotifier {
   void guardarComprobante(Comprobante comprobante) {
     usuario().comprasUsuario.add(comprobante);
     borrarCarrito();
-    print('Lista carrito: ${usuario().listaCarrito.length}');
   }
 
   void borrarComidaAFavorito(int indexFavorito, int posicion) {
@@ -104,31 +104,34 @@ class Datos extends ChangeNotifier {
         fotoPerfil: fotoPerfil,
         comidaFavorito: [],
         comprasUsuario: [],
-        listaCarrito: []);
+        listaCarrito: [],
+        misTarjetas: []);
     bd.listBD.add(newUser);
   }
 
   bool verificarLogin(String username, String pass) {
+    bool nombre = false;
+    bool contra = false;
     if (username.isEmpty || pass.isEmpty) {
       return false;
     }
 
     for (int index = 0; index < bd.listBD.length; index++) {
-      int a = 0;
       Usuario userVerifi = bd.listBD[index];
+      if (userVerifi.nombreDeUsuario == username) {
+        nombre = true;
+      }
+      if (userVerifi.contra == pass) {
+        contra = true;
+      }
 
-      if (userVerifi.nombreDeUsuario != username && userVerifi.contra != pass) {
-        a++;
-        if (a == bd.listBD.length) {
-          return false;
-        }
-      } else {
+      if (nombre && contra) {
         datosAdd.usuario = bd.listBD[index];
         return true;
       }
     }
 
-    return true;
+    return false;
   }
 
   bool verificarRegistro(String username, String pass, String pass2) {
@@ -149,5 +152,30 @@ class Datos extends ChangeNotifier {
 
   Usuario usuario() {
     return datosAdd.usuario;
+  }
+
+  String cuantaComidaHay(Comprobante comprobante) {
+    int total = comprobante.misCompras.length - 1;
+    return '${comprobante.misCompras[0].nombre}, $total +';
+  }
+
+  bool verificarDatosTarjeta(String nombre, int numero, int mes, int year) {
+    List<Tarjeta> listaTarjeta = datosAdd.usuario.misTarjetas;
+    for (int index = 0; index < listaTarjeta.length; index++) {
+      if (listaTarjeta[index].numero == numero) {
+        return false;
+      }
+    }
+    Tarjeta newTarjeta = Tarjeta(
+        nombre: nombre,
+        numero: numero,
+        venciminetoMes: mes,
+        vencimientoYear: year);
+    datosAdd.usuario.misTarjetas.add(newTarjeta);
+    return true;
+  }
+
+  void borrarTarjeta(int index) {
+    datosAdd.usuario.misTarjetas.removeAt(index);
   }
 }

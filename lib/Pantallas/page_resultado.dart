@@ -8,64 +8,70 @@ import 'package:pedilo_ya/datos/usuario.dart';
 import 'package:provider/provider.dart';
 
 class PaginaResultado extends StatefulWidget {
-  const PaginaResultado({super.key});
+  const PaginaResultado({super.key, required this.tipoDePago});
+
+  final String tipoDePago;
 
   @override
   State<PaginaResultado> createState() => _PaginaResultadoState();
 }
 
 class _PaginaResultadoState extends State<PaginaResultado> {
-  void mostrarCartelDecision() {
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        content: const SizedBox(
-          height: 100,
-          child: Center(
-            child: Text(
-              'Seguro que quieres cancelar el pedido',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-        ),
-        actions: <Widget>[
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text(
-                    'No',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PaginaMenu())),
-                  child: const Text(
-                    'Si',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<Datos>(
       builder: (context, datos, child) {
+        void mostrarCartelDecision() {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              content: const SizedBox(
+                height: 100,
+                child: Center(
+                  child: Text(
+                    'Seguro que quieres cancelar el pedido',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text(
+                          'No',
+                          style: TextStyle(fontSize: 30, color: Colors.black),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => {
+                          datos.borrarCarrito(),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PaginaMenu()))
+                        },
+                        child: const Text(
+                          'Si',
+                          style: TextStyle(fontSize: 30, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
         Comprobante comprobante = Comprobante(
+            precioTotal: datos.resultadoCarrito(),
             nombre: datos.usuario().nombreCompleto,
             direccion: datos.usuario().direccion,
-            tipoDePago: 'efectivo',
+            tipoDePago: widget.tipoDePago,
             misCompras: List.from(datos.usuario().listaCarrito));
         return Scaffold(
           appBar: AppBar(

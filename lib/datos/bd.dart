@@ -1,3 +1,4 @@
+import 'package:pedilo_ya/datos/tarjeta.dart';
 import 'package:pedilo_ya/datos/usuario.dart';
 
 class BaseDeDatos {
@@ -10,6 +11,7 @@ class BaseDeDatos {
         direccion: '742 de Evergreen Terrace',
         comidaFavorito: [],
         comprasUsuario: [],
-        listaCarrito: []),
+        listaCarrito: [],
+        misTarjetas: []),
   ];
 }

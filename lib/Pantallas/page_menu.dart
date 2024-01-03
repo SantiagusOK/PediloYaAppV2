@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:pedilo_ya/Pantallas/page_adios.dart';
 import 'package:pedilo_ya/Pantallas/page_carrito.dart';
 import 'package:pedilo_ya/Pantallas/page_comida_edit.dart';
+import 'package:pedilo_ya/Pantallas/page_compras.dart';
 import 'package:pedilo_ya/Pantallas/page_fav.dart';
 import 'package:pedilo_ya/datos/menu.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _PaginaMenuState extends State<PaginaMenu> {
     return Consumer<Datos>(
       builder: (context, datos, child) {
         return Scaffold(
+          backgroundColor: Color.fromARGB(255, 216, 216, 216),
           appBar: AppBar(
             backgroundColor: Colors.red,
             title: Image.asset(
@@ -56,8 +58,8 @@ class _PaginaMenuState extends State<PaginaMenu> {
                       BoxShadow(
                         color: Color.fromARGB(143, 0, 0, 0),
                         spreadRadius: 0,
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
+                        blurRadius: 1,
+                        offset: Offset(0, 0),
                       ),
                     ],
                   ),
@@ -243,7 +245,12 @@ class _PaginaMenuState extends State<PaginaMenu> {
                       Text('Mis Compras')
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PaginaCompras()));
+                  },
                 ),
                 ListTile(
                   title: const Row(
