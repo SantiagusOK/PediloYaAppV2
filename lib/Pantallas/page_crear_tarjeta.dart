@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pedilo_ya/Pantallas/page_resultado.dart';
+import 'package:flutter/services.dart';
 import 'package:pedilo_ya/Pantallas/page_tarjetas.dart';
 import 'package:pedilo_ya/datos/provider.dart';
-import 'package:pedilo_ya/datos/tarjeta.dart';
 import 'package:provider/provider.dart';
 
 class PaginaCrearTarjeta extends StatefulWidget {
@@ -28,13 +27,26 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
 
   int posicion = 0;
 
-  void mostrarSnakbar() {
+  void mostrarSnakbar(String mensaje) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Error: datos mal cargados, o tarjeta ya cargada'),
+      SnackBar(
+        content: Text(mensaje),
         backgroundColor: Colors.red,
       ),
     );
+  }
+
+  void verificarTipoDeError(int tipo) {
+    switch (tipo) {
+      case 0:
+        mostrarSnakbar('Esta tarjeta ya esta cargada a tu cuenta');
+      case 1:
+        mostrarSnakbar('fecha del mes mal colocada, o tarjeta vencida');
+      case 2:
+        mostrarSnakbar('fecha del año mal colocada, o tarjeta vencida');
+      case 3:
+        mostrarSnakbar('El nombre del propietario de la tarjeta esta vacia');
+    }
   }
 
   void cambiarPosicion(String decision) {
@@ -67,8 +79,12 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
           activarBoton = false;
         }
 
-        /// MES DE VENCIMIENTO
+        /////////////////////////////////////////////// MES DE VENCIMIENTO
         return TextField(
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
           maxLength: 2,
           controller: controlMes,
           onChanged: (valor) {
@@ -94,8 +110,12 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
           activarBoton = false;
         }
 
-        /// AÑO DE VENCIMIENTO
+        /////////////////////////////////////////////// AÑO DE VENCIMIENTO
         return TextField(
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
           controller: controlYear,
           maxLength: 2,
           onChanged: (valor) {
@@ -116,8 +136,12 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
         );
       case 3:
 
-        /// AÑO DE VENCIMIENTO
+        /////////////////////////////////////////////// AÑO DE VENCIMIENTO
         return TextField(
+          keyboardType: TextInputType.text,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+          ],
           maxLength: 23,
           controller: controlNombre,
           onChanged: (valor) {
@@ -139,6 +163,10 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
     }
     return TextField(
       controller: controlNumero,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ],
       maxLength: 16,
       onChanged: (valor) {
         setState(() {
@@ -162,7 +190,22 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
   Widget build(BuildContext context) {
     return Consumer<Datos>(
       builder: (context, datos, child) {
-        List<Tarjeta> tarjetas = datos.usuario().misTarjetas;
+        void funcionDelBotonAceptar() {
+          int numero = datos.verificarDatosTarjeta(
+              nombreWidget,
+              int.parse(numeroWidget),
+              int.parse(mesWidget),
+              int.parse(yearWidget));
+          if (numero == 3) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PaginaTarjetas()));
+          } else {
+            verificarTipoDeError(numero);
+          }
+        }
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.red,
@@ -172,100 +215,100 @@ class _PaginaCrearTarjetaState extends State<PaginaCrearTarjeta> {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          body: Center(
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10)),
-                  width: 390,
-                  height: 270,
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 60,
-                        left: 0,
-                        child: Image.asset('lib/images/chip.png', height: 80),
-                      ),
-                      Positioned(
-                        top: 140,
-                        child: Text(controlNumero.text,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 34)),
-                      ),
-                      Positioned(
-                        top: 187,
-                        left: 0,
-                        child: Text('${controlMes.text} / ${controlYear.text}',
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 15)),
-                      ),
-                      Positioned(
-                        top: 210,
-                        child: Text(controlNombre.text,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 24)),
-                      ),
-                    ],
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10)),
+                    width: 390,
+                    height: 270,
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 60,
+                          left: 0,
+                          child: Image.asset('lib/images/chip.png', height: 80),
+                        ),
+                        Positioned(
+                          top: 140,
+                          child: Text(controlNumero.text,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 34)),
+                        ),
+                        Positioned(
+                          top: 187,
+                          left: 0,
+                          child: Text(
+                              '${controlMes.text} / ${controlYear.text}',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 15)),
+                        ),
+                        Positioned(
+                          top: 210,
+                          child: Text(controlNombre.text,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 24)),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                //////////////////////////////////////////////////////////////////// TEXTFIELES
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      //////////////////////////////////////////////////////////////////// NUMERO
-                      mostrarTexfield(posicion),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () => cambiarPosicion('v-'),
-                            icon: const Icon(
-                              Icons.keyboard_arrow_left_rounded,
-                              size: 50,
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        //////////////////////////////////////////// Funcion para mostrar los textfields
+                        mostrarTexfield(posicion),
+                        const SizedBox(height: 50),
+                        //////////////////////////////////////////// FLECHAS
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //////////////////////////////////////////// FLECHAS DE DISMINUIR VALOR
+                            IconButton(
+                              onPressed: posicion == 0
+                                  ? null
+                                  : () => cambiarPosicion('v-'),
+                              icon: const Icon(
+                                Icons.keyboard_arrow_left_rounded,
+                                size: 50,
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: activarBoton
-                                ? () => cambiarPosicion('v+')
-                                : null,
-                            icon: Icon(
-                              posicion > 3
-                                  ? Icons.check
-                                  : Icons.keyboard_arrow_right_rounded,
-                              size: 50,
+                            //////////////////////////////////////////// FLECHAS DE AUMENTAR VALOR
+                            IconButton(
+                              onPressed: activarBoton
+                                  ? () => cambiarPosicion('v+')
+                                  : null,
+                              icon: Icon(
+                                posicion > 3
+                                    ? Icons.check
+                                    : Icons.keyboard_arrow_right_rounded,
+                                size: 50,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Text('$posicion'),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (datos.verificarDatosTarjeta(
-                              nombreWidget,
-                              int.parse(numeroWidget),
-                              int.parse(mesWidget),
-                              int.parse(yearWidget))) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PaginaTarjetas()));
-                          } else {
-                            mostrarSnakbar();
-                          }
-                        },
-                        child: Text('Aceptar'),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                          ],
+                        ),
+                        const SizedBox(height: 30),
+                        //////////////////////////////////////////// BOTON ACEPTAR
+                        activarBotonAceptar
+                            ? TextButton(
+                                onPressed: () => funcionDelBotonAceptar(),
+                                child: const Text(
+                                  'Aceptar',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 30),
+                                ),
+                              )
+                            : Container()
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );

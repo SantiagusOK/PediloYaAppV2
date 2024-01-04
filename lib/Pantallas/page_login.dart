@@ -11,6 +11,29 @@ class PaginaLogin extends StatefulWidget {
 }
 
 class _PaginaLoginState extends State<PaginaLogin> {
+  void tipoDeError(int tipo) {
+    switch (tipo) {
+      case 0:
+        mostrarSnakbara(
+            'Las casillas estan vacias, porfavor intente rellenarlas con datos');
+      case 1:
+        mostrarSnakbara('Este usuario no existe');
+      case 2:
+        mostrarSnakbara('Contraseña o nombre de usuario incorrectos');
+      case -1:
+        mostrarSnakbara('G R A C I O S O / S A');
+    }
+  }
+
+  void mostrarSnakbara(String mensajeError) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(mensajeError),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   TextEditingController controlUsername = TextEditingController();
   TextEditingController controlPass = TextEditingController();
   @override
@@ -66,19 +89,15 @@ class _PaginaLoginState extends State<PaginaLogin> {
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
-                      if (datos.verificarLogin(
-                          controlUsername.text, controlPass.text)) {
+                      int numero = datos.verificarLogin(
+                          controlUsername.text, controlPass.text);
+                      if (numero == 3) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const PaginaWelcome()));
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('ERROR: verifique bien los datos'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
+                        tipoDeError(numero);
                       }
                     },
                     child: const Text(

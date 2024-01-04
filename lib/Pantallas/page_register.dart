@@ -26,6 +26,27 @@ class _PaginaRegisterState extends State<PaginaRegister> {
   TextEditingController controlPass1 = TextEditingController();
   TextEditingController controlPass2 = TextEditingController();
 
+  void mostrarSnakbar(String mensajeError) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(mensajeError),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  void tipoDeError(int tipo) {
+    switch (tipo) {
+      case 0:
+        mostrarSnakbar(
+            'ERRO: Las casillas estan vacias, intente rellenarlas con datos');
+      case 1:
+        mostrarSnakbar('ERROR: Este usuario ya existe');
+      case 2:
+        mostrarSnakbar('ERROR: Las Contraseñas no son iguales');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Datos>(builder: (context, datos, child) {
@@ -72,7 +93,7 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: Image.asset(
-                            widget.imagen == ''
+                            widget.imagen.isEmpty
                                 ? 'lib/images/imagenes_perfil/default.png'
                                 : widget.imagen,
                             fit: BoxFit.cover,
@@ -173,15 +194,27 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
-                      if (datos.verificarRegistro(controlUsername.text,
-                          controlPass1.text, controlPass2.text)) {
+                      int numero = datos.verificarRegistro(
+                          controlNombre.text,
+                          controlApellido.text,
+                          controlUsername.text,
+                          controlDireccion.text,
+                          controlPass1.text,
+                          controlPass2.text);
+                      if (numero == 3) {
                         datos.guardarNuevoUsuario(
                             controlNombre.text,
                             controlApellido.text,
                             controlUsername.text,
                             controlDireccion.text,
                             controlPass1.text,
-                            widget.imagen);
+                            widget.imagen.isEmpty
+                                ? 'lib/images/imagenes_perfil/default.png'
+                                : widget.imagen);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PaginaInicio()));
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Cuenta creada con exito'),
@@ -189,12 +222,7 @@ class _PaginaRegisterState extends State<PaginaRegister> {
                           ),
                         );
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('ERROR: verifique bien los datos'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
+                        tipoDeError(numero);
                       }
                     },
                     child: const Text(

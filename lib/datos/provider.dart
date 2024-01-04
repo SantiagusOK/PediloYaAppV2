@@ -109,11 +109,14 @@ class Datos extends ChangeNotifier {
     bd.listBD.add(newUser);
   }
 
-  bool verificarLogin(String username, String pass) {
+  int verificarLogin(String username, String pass) {
     bool nombre = false;
     bool contra = false;
     if (username.isEmpty || pass.isEmpty) {
-      return false;
+      return 0;
+    }
+    if (username == 'datos' && pass == 'datos') {
+      return -1;
     }
 
     for (int index = 0; index < bd.listBD.length; index++) {
@@ -127,27 +130,36 @@ class Datos extends ChangeNotifier {
 
       if (nombre && contra) {
         datosAdd.usuario = bd.listBD[index];
-        return true;
+        return 3;
+      } else if (nombre && contra == false || nombre == false && contra) {
+        return 2;
       }
     }
 
-    return false;
+    return 1;
   }
 
-  bool verificarRegistro(String username, String pass, String pass2) {
-    if (username.isEmpty || pass.isEmpty) {
-      return false;
-    }
-    if (pass != pass2) {
-      return false;
+  int verificarRegistro(String nombre, String apellido, String username,
+      String direccion, String pass, String pass2) {
+    if (nombre.isEmpty ||
+        apellido.isEmpty ||
+        username.isEmpty ||
+        direccion.isEmpty ||
+        pass.isEmpty ||
+        pass2.isEmpty) {
+      return 0;
     }
     for (int index = 0; index < bd.listBD.length; index++) {
       Usuario userVerifi = bd.listBD[index];
       if (userVerifi.nombreDeUsuario == username) {
-        return false;
+        return 1;
       }
     }
-    return true;
+    if (pass != pass2) {
+      return 2;
+    }
+
+    return 3;
   }
 
   Usuario usuario() {
@@ -159,12 +171,22 @@ class Datos extends ChangeNotifier {
     return '${comprobante.misCompras[0].nombre}, $total +';
   }
 
-  bool verificarDatosTarjeta(String nombre, int numero, int mes, int year) {
+  int verificarDatosTarjeta(String nombre, int numero, int mes, int year) {
     List<Tarjeta> listaTarjeta = datosAdd.usuario.misTarjetas;
     for (int index = 0; index < listaTarjeta.length; index++) {
       if (listaTarjeta[index].numero == numero) {
-        return false;
+        return 0;
       }
+    }
+
+    if (mes > 12 || mes < 1) {
+      return 1;
+    }
+
+    if (year < 24) {
+      return 2;
+    } else if (year >= 24 && mes < 2) {
+      return 25;
     }
     Tarjeta newTarjeta = Tarjeta(
         nombre: nombre,
@@ -172,7 +194,7 @@ class Datos extends ChangeNotifier {
         venciminetoMes: mes,
         vencimientoYear: year);
     datosAdd.usuario.misTarjetas.add(newTarjeta);
-    return true;
+    return 3;
   }
 
   void borrarTarjeta(int index) {
