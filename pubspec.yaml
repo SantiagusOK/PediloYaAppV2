@@ -63,11 +63,19 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/images/pizza.jpg
-    - lib/images/chip.png
-    - lib/images/ravioles.jpg
-    - lib/images/pancho.jpg
-    - lib/images/hamburguesa.jpg
+      ###############  COMIDAS ###############
+    - lib/images/comida/hamburguesa.jpg
+    - lib/images/comida/lomito.jpg
+    - lib/images/comida/lasagna.jpg
+    - lib/images/comida/mila_napo.jpg
+    - lib/images/comida/pizza_muzza.jpg
+    - lib/images/comida/ravioles.jpg
+    - lib/images/comida/empanadas.jpg
+    - lib/images/comida/papas.jpg
+      ###############  BEBIDAS ###############
+    - lib/images/comida/lata_pepsi.png
+    - lib/images/comida/lata_coca.jpg
+    ###############  OTRAS COSAS ###############
     - lib/images/mini_logo.png
     - lib/images/fondo_inicio.jpg
     - lib/images/imagenes_perfil/img1.png

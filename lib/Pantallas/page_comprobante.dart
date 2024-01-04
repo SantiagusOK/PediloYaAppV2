@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pedilo_ya/Pantallas/page_adios.dart';
 import 'package:pedilo_ya/Pantallas/page_compras.dart';
 import 'package:pedilo_ya/Pantallas/page_final.dart';
 import 'package:pedilo_ya/datos/comprobante.dart';
@@ -27,7 +26,7 @@ class PaginaComprobante extends StatelessWidget {
                             ? const PaginaCompras()
                             : const PaginaFinal()));
               },
-              icon: Icon(Icons.arrow_back_ios_rounded)),
+              icon: const Icon(Icons.arrow_back_ios_rounded)),
           backgroundColor: Colors.red,
         ),
         body: Center(
@@ -65,13 +64,13 @@ class PaginaComprobante extends StatelessWidget {
                 ),
                 ////////////////////// CUADRADO DE LA LISTA DE COMIDA
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   width: 340,
                   height: 330,
                   color: Colors.white,
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) =>
-                        Divider(),
+                        const Divider(),
                     itemCount: comprobante.misCompras.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
@@ -103,7 +102,7 @@ class PaginaComprobante extends StatelessWidget {
                   width: 340,
                   height: 160,
                   color: Colors.white,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
                       Row(

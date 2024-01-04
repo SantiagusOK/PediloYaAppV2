@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:pedilo_ya/Pantallas/page_adios.dart';
 import 'package:pedilo_ya/Pantallas/page_carrito.dart';
 import 'package:pedilo_ya/Pantallas/page_comida_edit.dart';
 import 'package:pedilo_ya/Pantallas/page_compras.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
-import 'package:pedilo_ya/datos/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';
@@ -27,11 +24,10 @@ class _PaginaFavoritoState extends State<PaginaFavorito> {
 
   @override
   Widget build(BuildContext context) {
-    Menu menu = Menu();
     return Consumer<Datos>(
       builder: (context, datos, child) {
         return Scaffold(
-          backgroundColor: Color.fromARGB(255, 216, 216, 216),
+          backgroundColor: const Color.fromARGB(255, 224, 224, 224),
           appBar: AppBar(
             backgroundColor: Colors.red,
             title: Image.asset(

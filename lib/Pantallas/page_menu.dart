@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:pedilo_ya/Pantallas/page_adios.dart';
 import 'package:pedilo_ya/Pantallas/page_carrito.dart';
 import 'package:pedilo_ya/Pantallas/page_comida_edit.dart';
@@ -31,7 +29,7 @@ class _PaginaMenuState extends State<PaginaMenu> {
     return Consumer<Datos>(
       builder: (context, datos, child) {
         return Scaffold(
-          backgroundColor: Color.fromARGB(255, 216, 216, 216),
+          backgroundColor: const Color.fromARGB(255, 216, 216, 216),
           appBar: AppBar(
             backgroundColor: Colors.red,
             title: Image.asset(

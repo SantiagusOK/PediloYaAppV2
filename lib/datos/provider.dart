@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/datos/bd.dart';
 import 'package:pedilo_ya/datos/comida.dart';
@@ -27,11 +25,11 @@ class Datos extends ChangeNotifier {
   }
 
   void borrarCarrito() {
-    datosAdd.usuario.listaCarrito.clear();
+    datosAdd.listaCarrito.clear();
   }
 
   void guardarComidaACarrito(ComidaCarrito newComida) {
-    datosAdd.usuario.listaCarrito.add(newComida);
+    datosAdd.listaCarrito.add(newComida);
   }
 
   void guardarComidaAFavorito(Comida comida) {
@@ -75,19 +73,19 @@ class Datos extends ChangeNotifier {
   }
 
   List<ComidaCarrito> listaCarrito() {
-    return datosAdd.usuario.listaCarrito;
+    return datosAdd.listaCarrito;
   }
 
   int resultadoCarrito() {
     int totalCarrito = 0;
-    for (int index = 0; index < datosAdd.usuario.listaCarrito.length; index++) {
-      totalCarrito = totalCarrito + datosAdd.usuario.listaCarrito[index].precio;
+    for (int index = 0; index < datosAdd.listaCarrito.length; index++) {
+      totalCarrito = totalCarrito + datosAdd.listaCarrito[index].precio;
     }
     return totalCarrito;
   }
 
   void borrarComidaDelCarrito(int index) {
-    datosAdd.usuario.listaCarrito.removeAt(index);
+    datosAdd.listaCarrito.removeAt(index);
   }
 
   void guardarCarritoASaved() {
@@ -104,7 +102,6 @@ class Datos extends ChangeNotifier {
         fotoPerfil: fotoPerfil,
         comidaFavorito: [],
         comprasUsuario: [],
-        listaCarrito: [],
         misTarjetas: []);
     bd.listBD.add(newUser);
   }

@@ -1,5 +1,4 @@
 import 'package:pedilo_ya/Pantallas/page_inicio.dart';
-import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';

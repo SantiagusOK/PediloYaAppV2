@@ -4,7 +4,6 @@ import 'package:pedilo_ya/Pantallas/page_carrito.dart';
 import 'package:pedilo_ya/Pantallas/page_comprobante.dart';
 import 'package:pedilo_ya/Pantallas/page_fav.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
-import 'package:pedilo_ya/datos/comprobante.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:pedilo_ya/datos/usuario.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class PaginaCompras extends StatelessWidget {
     return Consumer<Datos>(builder: (context, datos, child) {
       Usuario user = datos.usuario();
       return Scaffold(
-        backgroundColor: Color.fromARGB(255, 224, 224, 224),
+        backgroundColor: const Color.fromARGB(255, 224, 224, 224),
         appBar: AppBar(
           backgroundColor: Colors.red,
           centerTitle: true,
@@ -116,7 +115,13 @@ class PaginaCompras extends StatelessWidget {
                 ),
               )
             : const Center(
-                child: Text('No tienes compras realizadas'),
+                child: Text(
+                  'No has realizado ninguna compra',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.grey),
+                ),
               ),
         drawer: Drawer(
           child: ListView(

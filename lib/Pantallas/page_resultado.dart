@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/Pantallas/page_final.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
-import 'package:pedilo_ya/datos/comida.dart';
 import 'package:pedilo_ya/datos/comprobante.dart';
 import 'package:pedilo_ya/datos/provider.dart';
-import 'package:pedilo_ya/datos/usuario.dart';
 import 'package:provider/provider.dart';
 
 class PaginaResultado extends StatefulWidget {
@@ -72,7 +70,7 @@ class _PaginaResultadoState extends State<PaginaResultado> {
             nombre: datos.usuario().nombreCompleto,
             direccion: datos.usuario().direccion,
             tipoDePago: widget.tipoDePago,
-            misCompras: List.from(datos.usuario().listaCarrito));
+            misCompras: List.from(datos.listaCarrito()));
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.red,

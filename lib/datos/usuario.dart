@@ -1,5 +1,5 @@
 import 'package:pedilo_ya/datos/comida.dart';
-import 'package:pedilo_ya/datos/comida_carrito.dart';
+
 import 'package:pedilo_ya/datos/comprobante.dart';
 import 'package:pedilo_ya/datos/tarjeta.dart';
 
@@ -9,7 +9,6 @@ class Usuario {
   String contra;
   String fotoPerfil;
   String direccion;
-  List<ComidaCarrito> listaCarrito;
   List<Comprobante> comprasUsuario;
   List<Comida> comidaFavorito;
   List<Tarjeta> misTarjetas;
@@ -21,7 +20,6 @@ class Usuario {
     this.direccion = '',
     required this.comprasUsuario,
     required this.comidaFavorito,
-    required this.listaCarrito,
     required this.misTarjetas,
   });
 }

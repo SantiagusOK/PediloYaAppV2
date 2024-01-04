@@ -106,6 +106,7 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
     return Consumer<Datos>(
       builder: (context, datos, child) {
         return Scaffold(
+          backgroundColor: const Color.fromARGB(255, 224, 224, 224),
           appBar: AppBar(
             backgroundColor: Colors.red,
           ),
@@ -163,11 +164,11 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                 )
               : const Center(
                   child: Text(
-                    'Tu carrito está vacio',
+                    'Tu carrito esta vacio',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        color: Color.fromARGB(158, 0, 0, 0)),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.grey),
                   ),
                 ),
           //--------------------------------------BARRA DE ABAJO

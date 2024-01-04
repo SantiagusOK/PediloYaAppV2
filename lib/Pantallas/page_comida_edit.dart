@@ -51,7 +51,6 @@ class _PaginaEditState extends State<PaginaEdit> {
 
   @override
   void initState() {
-    Menu menu = Menu();
     precioEdit = widget.comida.precio;
     super.initState();
   }

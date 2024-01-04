@@ -1,10 +1,7 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pedilo_ya/Pantallas/page_img.dart';
 import 'package:pedilo_ya/Pantallas/page_inicio.dart';
-import 'package:pedilo_ya/datos/datos.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:provider/provider.dart';
 

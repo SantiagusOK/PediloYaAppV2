@@ -5,11 +5,8 @@ class DatosApp {
   int posicion = 0;
 
   /// 0 es menu, 1 es favorito
-  Usuario usuario = Usuario(
-      comidaFavorito: [],
-      comprasUsuario: [],
-      listaCarrito: [],
-      misTarjetas: []);
+  Usuario usuario =
+      Usuario(comidaFavorito: [], comprasUsuario: [], misTarjetas: []);
   int posicionbd = 0;
   String nombreYApellido = '';
   String imagenUser = '';
