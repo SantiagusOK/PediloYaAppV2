@@ -4,7 +4,6 @@ import 'package:pedilo_ya/datos/comida.dart';
 import 'package:pedilo_ya/datos/comida_carrito.dart';
 import 'package:pedilo_ya/datos/comprobante.dart';
 import 'package:pedilo_ya/datos/datos.dart';
-import 'package:pedilo_ya/datos/menu.dart';
 import 'package:pedilo_ya/datos/tarjeta.dart';
 import 'package:pedilo_ya/datos/usuario.dart';
 
@@ -16,13 +15,6 @@ class Datos extends ChangeNotifier {
   BaseDeDatos get bds => BaseDeDatos();
 
   //FUNCIONES
-  void cambiarPosicion(int posicion) {
-    datosAdd.posicion = posicion;
-  }
-
-  int posicion() {
-    return datosAdd.posicion;
-  }
 
   void borrarCarrito() {
     datosAdd.listaCarrito.clear();
@@ -42,27 +34,21 @@ class Datos extends ChangeNotifier {
     borrarCarrito();
   }
 
-  void borrarComidaAFavorito(int indexFavorito, int posicion) {
-    Menu menu = Menu();
+  void borrarComidaAFavorito(Comida comida) {
+    String comidaFav = comida.nombre;
 
-    if (posicion == 0) {
-      for (int index = 0; index < usuario().comidaFavorito.length; index++) {
-        for (int index2 = 0; index < menu.listMenu.length; index2++) {
-          if (menu.listMenu[index2].nombre ==
-              usuario().comidaFavorito[index].nombre) {
-            usuario().comidaFavorito.removeAt(index);
-            return;
-          }
-        }
+    // aca buscara el nombre de la comida en la lista de favorito, si es igual a la comida que el usuario quiere quitar, entonces lo elimina.
+    for (int index = 0;
+        index < datosAdd.usuario.comidaFavorito.length;
+        index++) {
+      if (datosAdd.usuario.comidaFavorito[index].nombre == comidaFav) {
+        datosAdd.usuario.comidaFavorito.removeAt(index);
       }
-    } else {
-      usuario().comidaFavorito.removeAt(indexFavorito);
     }
   }
 
-  bool comidaEnFavorito(int indexMenu) {
-    Menu menu = Menu();
-    String comidaMenu = menu.listMenu[indexMenu].nombre;
+  bool comidaEnFavorito(Comida comida) {
+    String comidaMenu = comida.nombre;
 
     for (int index = 0; index < usuario().comidaFavorito.length; index++) {
       if (usuario().comidaFavorito[index].nombre == comidaMenu) {
@@ -84,12 +70,14 @@ class Datos extends ChangeNotifier {
     return totalCarrito;
   }
 
-  void borrarComidaDelCarrito(int index) {
-    datosAdd.listaCarrito.removeAt(index);
-  }
+  void borrarComidaDelCarrito(ComidaCarrito comidaCarrito) {
+    String comidaNombre = comidaCarrito.nombre;
 
-  void guardarCarritoASaved() {
-    datosAdd.listaCarritoSaved = datosAdd.listaCarrito;
+    for (int index = 0; index < datosAdd.listaCarrito.length; index++) {
+      if (datosAdd.listaCarrito[index].nombre == comidaNombre) {
+        datosAdd.listaCarrito.removeAt(index);
+      }
+    }
   }
 
   void guardarNuevoUsuario(String nombre, String apellido, String username,
@@ -117,22 +105,26 @@ class Datos extends ChangeNotifier {
     }
 
     for (int index = 0; index < bd.listBD.length; index++) {
+      int indexsave = 0;
       Usuario userVerifi = bd.listBD[index];
+
       if (userVerifi.nombreDeUsuario == username) {
         nombre = true;
+        indexsave = index;
       }
       if (userVerifi.contra == pass) {
         contra = true;
       }
 
-      if (nombre && contra) {
-        datosAdd.usuario = bd.listBD[index];
-        return 3;
-      } else if (nombre && contra == false || nombre == false && contra) {
-        return 2;
+      if (index == bd.listBD.length - 1) {
+        if (nombre && contra) {
+          datosAdd.usuario = bd.listBD[indexsave];
+          return 3;
+        } else if (nombre && contra == false || nombre == false && contra) {
+          return 2;
+        }
       }
     }
-
     return 1;
   }
 

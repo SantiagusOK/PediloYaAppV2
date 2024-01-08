@@ -20,7 +20,7 @@ class PaginaInicio extends StatelessWidget {
             children: [
               Container(
                 decoration: const BoxDecoration(
-                  color: Colors.red,
+                  color: Color.fromARGB(255, 255, 88, 77),
                   borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20)),
@@ -46,10 +46,13 @@ class PaginaInicio extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    ////////////////////// BOTON INICIAR SESION
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12))),
                           backgroundColor: Colors.white,
                           minimumSize: const Size(300, 80)),
                       onPressed: () {
@@ -63,11 +66,14 @@ class PaginaInicio extends StatelessWidget {
                         style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
+                    ////////////////////// BOTON REGISTRARSE
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12))),
                           backgroundColor: Colors.white,
                           minimumSize: const Size(300, 80)),
                       onPressed: () {
