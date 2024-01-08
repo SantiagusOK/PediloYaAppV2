@@ -190,4 +190,29 @@ class Datos extends ChangeNotifier {
   void borrarTarjeta(int index) {
     datosAdd.usuario.misTarjetas.removeAt(index);
   }
+
+  // esta funcion elimina comida repetida, y las combina en una
+  void combinarComida() {
+    List<ComidaCarrito> listaComida = datosAdd.listaCarrito;
+    for (int index = 0; index < listaComida.length; index++) {
+      ComidaCarrito comida1 = listaComida[index];
+      if (index == listaComida.length) {
+        return;
+      }
+      for (int index2 = index + 1; index2 < listaComida.length; index2++) {
+        ComidaCarrito comida2 = listaComida[index2];
+        if (comida1.nombre == comida2.nombre) {
+          int totalCombinacion = comida1.precio + comida2.precio;
+          int totalCantidad = comida1.cantidad + comida2.cantidad;
+          ComidaCarrito comidaCarritoCombinada = ComidaCarrito(
+              nombre: comida1.nombre,
+              precio: totalCombinacion,
+              cantidad: totalCantidad,
+              imagen: comida1.imagen);
+          datosAdd.listaCarrito[index] = comidaCarritoCombinada;
+          datosAdd.listaCarrito.removeAt(index2);
+        }
+      }
+    }
+  }
 }

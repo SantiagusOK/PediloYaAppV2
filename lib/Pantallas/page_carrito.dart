@@ -16,6 +16,16 @@ class PaginaCarrito extends StatefulWidget {
 }
 
 class _PaginaCarritoState extends State<PaginaCarrito> {
+  @override
+  void initState() {
+    Datos datos = Provider.of<Datos>(context, listen: false);
+    if (datos.listaCarrito().length >= 2) {
+      datos.combinarComida();
+    }
+
+    super.initState();
+  }
+
   void mostrarCartelDecision() {
     showDialog<String>(
       context: context,

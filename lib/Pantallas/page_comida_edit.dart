@@ -31,6 +31,9 @@ class _PaginaEditState extends State<PaginaEdit> {
   void sumarCantidad() {
     setState(() {
       cantidad++;
+      if (cantidad > 20) {
+        cantidad = 20;
+      }
       precioEdit = cantidad * widget.comida.precio;
     });
   }
@@ -59,6 +62,7 @@ class _PaginaEditState extends State<PaginaEdit> {
   @override
   void initState() {
     precioEdit = widget.comida.precio;
+
     super.initState();
   }
 
@@ -161,7 +165,7 @@ class _PaginaEditState extends State<PaginaEdit> {
                       // CANTIDAD - BOTONES
                       Container(
                         height: 100,
-                        padding: const EdgeInsets.only(left: 15, right: 5),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(15),
@@ -170,50 +174,55 @@ class _PaginaEditState extends State<PaginaEdit> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // TEXTO DE CANTIDAD
-                            const Text(
-                              'Cantidad:',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            const Text('Cantidad:',
+                                style: TextStyle(
+                                    fontSize: 25, color: Colors.white)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 // BOTON -
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    foregroundColor: Colors.white,
-                                    surfaceTintColor: Colors.transparent,
-                                  ),
-                                  onPressed: () => realizarAccion('c-'),
-                                  child: const Icon(
-                                    Icons.remove,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                    style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20),
+                                        )),
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: Colors.transparent,
+                                        surfaceTintColor: Colors.white),
+                                    onPressed: () => realizarAccion('c-'),
+                                    child: const Icon(Icons.remove,
+                                        color: Colors.black)),
+                                const SizedBox(width: 2),
                                 // CANTIDAD NUMERO
                                 Container(
-                                  alignment: Alignment.center,
-                                  width: 50,
-                                  child: Text('x$cantidad',
-                                      style: const TextStyle(
-                                          fontSize: 20, color: Colors.white)),
-                                ),
+                                    color: Colors.white,
+                                    alignment: Alignment.center,
+                                    width: 50,
+                                    height: 40,
+                                    child: Text(
+                                        cantidad < 10
+                                            ? 'x0$cantidad'
+                                            : 'x$cantidad',
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black))),
+                                const SizedBox(width: 2),
                                 // BOTON +
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    foregroundColor: Colors.white,
-                                    surfaceTintColor: Colors.transparent,
-                                  ),
-                                  onPressed: () => realizarAccion('c+'),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                    style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                        )),
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: Colors.transparent,
+                                        surfaceTintColor: Colors.white),
+                                    onPressed: () => realizarAccion('c+'),
+                                    child: const Icon(Icons.add,
+                                        color: Colors.black))
                               ],
                             ),
                           ],
