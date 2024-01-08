@@ -1,8 +1,3 @@
-import 'package:pedilo_ya/Pantallas/page_adios.dart';
-import 'package:pedilo_ya/Pantallas/page_carrito.dart';
-import 'package:pedilo_ya/Pantallas/page_comida_edit.dart';
-import 'package:pedilo_ya/Pantallas/page_compras.dart';
-import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/Pantallas/widgets/botones_comida.dart';
 import 'package:pedilo_ya/Pantallas/widgets/drawer.dart';
@@ -19,12 +14,6 @@ class PaginaFavorito extends StatefulWidget {
 }
 
 class _PaginaFavoritoState extends State<PaginaFavorito> {
-  @override
-  void initState() {
-    Datos datos = Provider.of<Datos>(context, listen: false);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<Datos>(

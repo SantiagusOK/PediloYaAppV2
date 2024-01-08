@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:pedilo_ya/datos/provider.dart';
+import 'package:pedilo_ya/datos/usuario.dart';
 import 'package:provider/provider.dart';
 
 class PaginaWelcome extends StatefulWidget {
@@ -24,6 +25,7 @@ class _PaginaWelcomeState extends State<PaginaWelcome> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Datos>(builder: (context, datos, child) {
+      Usuario usuario = datos.usuario();
       return Scaffold(
         backgroundColor: Colors.green,
         body: Center(
@@ -31,12 +33,12 @@ class _PaginaWelcomeState extends State<PaginaWelcome> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                datos.usuario().fotoPerfil,
+                usuario.fotoPerfil,
                 height: 150,
               ),
               const SizedBox(height: 10),
               Text(
-                datos.usuario().nombreCompleto,
+                usuario.nombreCompleto,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
               const SizedBox(height: 20),

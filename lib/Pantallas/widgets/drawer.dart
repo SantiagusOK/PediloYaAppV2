@@ -6,6 +6,7 @@ import 'package:pedilo_ya/Pantallas/page_fav.dart';
 import 'package:pedilo_ya/Pantallas/page_menu.dart';
 import 'package:pedilo_ya/datos/usuario.dart';
 
+// ignore: must_be_immutable
 class DrawerApp extends StatelessWidget {
   Usuario user;
   int lugar;

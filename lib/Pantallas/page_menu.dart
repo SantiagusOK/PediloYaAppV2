@@ -15,12 +15,6 @@ class PaginaMenu extends StatefulWidget {
 
 class _PaginaMenuState extends State<PaginaMenu> {
   @override
-  void initState() {
-    Datos datos = Provider.of<Datos>(context, listen: false);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Consumer<Datos>(
       builder: (context, datos, child) {

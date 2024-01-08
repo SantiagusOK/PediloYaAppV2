@@ -75,7 +75,8 @@ flutter:
       ###############  BEBIDAS ###############
     - lib/images/comida/lata_pepsi.png
     - lib/images/comida/lata_coca.jpg
-    ###############  OTRAS COSAS ###############
+      #############  OTRAS COSAS ###############
+    - lib/images/chip.png
     - lib/images/mini_logo.png
     - lib/images/fondo_inicio.jpg
     - lib/images/imagenes_perfil/img1.png

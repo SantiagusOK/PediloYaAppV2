@@ -76,6 +76,7 @@ class Datos extends ChangeNotifier {
     for (int index = 0; index < datosAdd.listaCarrito.length; index++) {
       if (datosAdd.listaCarrito[index].nombre == comidaNombre) {
         datosAdd.listaCarrito.removeAt(index);
+        return;
       }
     }
   }

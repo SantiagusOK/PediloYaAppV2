@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pedilo_ya/Pantallas/page_adios.dart';
-import 'package:pedilo_ya/Pantallas/page_carrito.dart';
+
 import 'package:pedilo_ya/Pantallas/page_comprobante.dart';
-import 'package:pedilo_ya/Pantallas/page_fav.dart';
-import 'package:pedilo_ya/Pantallas/page_menu.dart';
+
 import 'package:pedilo_ya/Pantallas/widgets/drawer.dart';
 import 'package:pedilo_ya/datos/provider.dart';
 import 'package:pedilo_ya/datos/usuario.dart';

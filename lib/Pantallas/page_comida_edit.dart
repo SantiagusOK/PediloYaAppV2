@@ -1,7 +1,4 @@
 import 'package:pedilo_ya/Pantallas/page_carrito.dart';
-import 'package:pedilo_ya/Pantallas/page_fav.dart';
-import 'package:pedilo_ya/Pantallas/page_menu.dart';
-import 'package:pedilo_ya/Pantallas/widgets/widgets_comidaedit.dart';
 import 'package:pedilo_ya/datos/comida.dart';
 import 'package:pedilo_ya/datos/comida_carrito.dart';
 import 'package:pedilo_ya/datos/menu.dart';

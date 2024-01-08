@@ -107,6 +107,12 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
         return Scaffold(
             backgroundColor: const Color.fromARGB(255, 224, 224, 224),
             appBar: AppBar(
+              centerTitle: true,
+              title: const Text(
+                'Carrito',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
               backgroundColor: Colors.red,
             ),
             body: listaCarrito.isNotEmpty
@@ -167,32 +173,33 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                             color: Colors.grey))),
-            //--------------------------------------BARRA DE ABAJO
+            // BARRA DE ABAJO
             bottomNavigationBar: listaCarrito.isNotEmpty
                 ? Container(
                     color: Colors.red,
                     height: 90,
+                    // CONTENIDO
                     child: Row(
                       children: [
-                        //----------------------------------------------TEXT TOTAL DE LA COMIDA
                         SizedBox(
                           width: 195,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              // TEXTO TOTAL
                               const Text('TOTAL:',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 25,
                                       fontWeight: FontWeight.w900)),
-                              //----------------------------------------------TOTAL DE LA COMIDA
+                              // PRECIO TOTAL
                               Text('\$${datos.resultadoCarrito()}',
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 25)),
                             ],
                           ),
                         ),
-                        //----------------------------------------------BOTON DE AGREGAR
+                        // BOTON DE AGREGAR
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -218,7 +225,7 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                             ),
                           ),
                         ),
-                        //----------------------------------------------BOTON DE LISTO
+                        // BOTON DE LISTO
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -233,12 +240,8 @@ class _PaginaCarritoState extends State<PaginaCarrito> {
                               //datos.mostrarListaCarrito();
                             },
                             child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.check),
-                                Text('Listo'),
-                              ],
-                            ),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Icon(Icons.check), Text('Listo')]),
                           ),
                         ),
                       ],
